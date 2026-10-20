@@ -1,4 +1,4 @@
-package reserva.usecase;
+package usecase;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +10,7 @@ import reserva.exception.ReservationAlreadyCancelledException;
 import reserva.exception.ReservationNotFoundException;
 import reserva.modelo.Reserva;
 import reserva.output.ReservationRepository;
+import reserva.usecase.CancelReservationUseCase;
 
 import java.time.LocalDate;
 import java.util.Optional;

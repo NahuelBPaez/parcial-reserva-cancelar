@@ -1,8 +1,9 @@
-package reserva.modelo;
+package model;
 
 import org.junit.jupiter.api.Test;
 import reserva.exception.InvalidReservationException;
 import reserva.exception.ReservationAlreadyCancelledException;
+import reserva.modelo.Reserva;
 
 import java.time.LocalDate;
 import java.util.UUID;
