@@ -18,7 +18,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -48,6 +48,7 @@ class CancelReservationUseCaseTest {
     @Test
     void cancelaYGuardaUnaReservaExistente() {
         when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reserva));
+        when(reservationRepository.save(reserva)).thenReturn(true);
 
         Reserva resultado = useCase.execute(reservationId);
 
@@ -66,7 +67,7 @@ class CancelReservationUseCaseTest {
                 () -> useCase.execute(reservationId)
         );
 
-        verify(reservationRepository, never()).save(reserva);
+        verify(reservationRepository, never()).save(any());
     }
 
     @Test
@@ -79,15 +80,13 @@ class CancelReservationUseCaseTest {
                 () -> useCase.execute(reservationId)
         );
 
-        verify(reservationRepository, never()).save(reserva);
+        verify(reservationRepository, never()).save(any());
     }
 
     @Test
     void informaCuandoNoPuedeGuardarLaReservaCancelada() {
         when(reservationRepository.findById(reservationId)).thenReturn(Optional.of(reserva));
-        doThrow(new PersistenceException("No se pudo guardar la reserva"))
-                .when(reservationRepository)
-                .save(reserva);
+        when(reservationRepository.save(reserva)).thenReturn(false);
 
         assertThrows(
                 PersistenceException.class,
