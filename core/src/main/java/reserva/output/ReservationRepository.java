@@ -9,5 +9,5 @@ public interface ReservationRepository {
 
     Optional<Reserva> findById(UUID id);
 
-    void save(Reserva reserva);
+    boolean save(Reserva reserva);
 }

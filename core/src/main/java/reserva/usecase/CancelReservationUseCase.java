@@ -1,5 +1,6 @@
 package reserva.usecase;
 
+import reserva.exception.PersistenceException;
 import reserva.exception.ReservationNotFoundException;
 import reserva.modelo.Reserva;
 import reserva.output.ReservationRepository;
@@ -21,7 +22,9 @@ public final class CancelReservationUseCase {
                 ));
 
         reserva.cancelar();
-        reservationRepository.save(reserva);
+        if (!reservationRepository.save(reserva)) {
+            throw new PersistenceException("No se pudo guardar la reserva");
+        }
 
         return reserva;
     }
